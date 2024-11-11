@@ -11,7 +11,7 @@ import queue
 import time
 import os
 
-# turn off the welcome message from pygame package
+
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 os.environ["GRPC_VERBOSITY"] = "ERROR"
 os.environ["GLOG_minloglevel"] = "2"
@@ -32,44 +32,44 @@ rled = LED(25)
 mixer.pre_init(frequency=24000, buffer=2048) 
 mixer.init()
 
-# add your Google Gemini API key here
-my_api_key = "AIzaSyDd4T3Cq8UaH4kBpNdrqMA2sxn3NpbF-nI"
+# add Google Gemini API key here
+my_api_key = ""
 
 if len(my_api_key) < 2:
     print(f"Please add your Google Gemini API key in the program (line 36). \n " )
     quit() 
 
-# set Google Gemini API key as a system environment variable or add it here
+
 genai.configure(api_key= my_api_key)
 
-# model of Google Gemini API
+
 model = genai.GenerativeModel('gemini-pro',
     generation_config=genai.GenerationConfig(
         candidate_count=1,
         top_p = 0.95,
         top_k = 64,
-        max_output_tokens=100, # 100 tokens correspond to roughly 60-80 words.
+        max_output_tokens=100,
         temperature = 0.9,
     ))
 
-# start the chat model 
+
 chat = model.start_chat(history=[])
 
 
 today = str(date.today())
 
-# Initialize the counters  
+
 numtext = 0 
 numtts = 0 
 numaudio = 0
 
-# thread 1 for text generation 
+
 def chatfun(request, text_queue, llm_done, stop_event):
     global numtext, chat
     
     response = chat.send_message(request, stream=True)
  
-    # response.resolve() # waits for the completion of streaming response.
+    
     
     shortstring = ''  
     ctext = ''
@@ -116,10 +116,10 @@ def chatfun(request, text_queue, llm_done, stop_event):
         llm_done.set()
         stop_event.set()
     
-    llm_done.set()  # Signal completion after the loop
+    llm_done.set()
 
     
-# convert "text" to audio file and play back 
+
 def speak_text(text):
     global slang, rled
            
