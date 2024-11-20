@@ -1,4 +1,5 @@
 [
-    {"name": "living light", "ip": "172.20.10.4/26"},
+    {"name": "living light", "ip": "172.20.10.4/26/on"},
     {"name": "kitchen light", "ip": "172.20.10.4/27"}
+    
 ]
